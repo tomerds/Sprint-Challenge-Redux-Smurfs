@@ -1,14 +1,25 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import { connect } from 'react-redux';
-import { Card, CardText, CardTitle } from 'reactstrap';
+import { Button, Card, CardBody, CardText, CardTitle, Collapse } from 'reactstrap';
 
 import { getSmurfs } from '../actions';
+import UpdateSmurf from './UpdateSmurf';
 
 class SmurfsList extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.toggle = this.toggle.bind(this);
+    this.state = { collapse: false };
+  }
+
   componentDidMount() {
     this.props.getSmurfs()
+  }
+
+  toggle() {
+    this.setState(state => ({ collapse: !state.collapse }));
   }
 
   render() {
@@ -28,7 +39,20 @@ class SmurfsList extends React.Component {
                   <CardText>
                     {`height: ${e.height}`}
                   </CardText>
+                  <div>
+                    <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Update Smurf</Button>
+                    <Collapse isOpen={this.state.collapse}>
+                      <Card>
+                        <CardBody style={{ color: 'black' }}>
+                          <UpdateSmurf id={e.id} />
+                        </CardBody>
+                      </Card>
+                    </Collapse>
+                  </div>
                 </Card>
+
+
+
               </li>
             ))
           }
