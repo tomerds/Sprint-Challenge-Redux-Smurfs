@@ -3,7 +3,7 @@ import Loader from 'react-loader-spinner';
 import { connect } from 'react-redux';
 import { Button, Card, CardBody, CardText, CardTitle, Collapse } from 'reactstrap';
 
-import { getSmurfs } from '../actions';
+import { deleteSmurf, getSmurfs } from '../actions';
 import UpdateSmurf from './UpdateSmurf';
 
 class SmurfsList extends React.Component {
@@ -20,6 +20,11 @@ class SmurfsList extends React.Component {
 
   toggle() {
     this.setState(state => ({ collapse: !state.collapse }));
+  }
+
+  deleteSmurf = (event, id) => {
+    event.preventDefault();
+    this.props.deleteSmurf(id);
   }
 
   render() {
@@ -39,20 +44,18 @@ class SmurfsList extends React.Component {
                   <CardText>
                     {`height: ${e.height}`}
                   </CardText>
-                  <div>
+                  <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column' }}>
                     <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Update Smurf</Button>
                     <Collapse isOpen={this.state.collapse}>
                       <Card>
                         <CardBody style={{ color: 'black' }}>
-                          <UpdateSmurf id={e.id} />
+                          <UpdateSmurf id={e.id} name={e.name} />
                         </CardBody>
                       </Card>
                     </Collapse>
+                    <Button color="danger" onClick={(event) => this.deleteSmurf(event, e.id)} style={{ marginBottom: '1rem' }}>Delete Smurf</Button>
                   </div>
                 </Card>
-
-
-
               </li>
             ))
           }
@@ -73,6 +76,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    getSmurfs
+    getSmurfs,
+    deleteSmurf
   }
 )(SmurfsList)

@@ -2,6 +2,9 @@ import {
   ADD_SMURF_FAIL,
   ADD_SMURF_START,
   ADD_SMURF_SUCCESS,
+  DELETE_SMURF_FAIL,
+  DELETE_SMURF_START,
+  DELETE_SMURF_SUCCESS,
   FETCH_FAIL,
   FETCH_START,
   FETCH_SUCCESS,
@@ -79,6 +82,23 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         updatingSmurf: false,
+        error: action.payload
+      }
+    case DELETE_SMURF_START:
+      return {
+        ...state,
+        deletingSmurf: true,
+      };
+    case DELETE_SMURF_SUCCESS:
+      return {
+        ...state,
+        deletingSmurf: false,
+        smurfs: action.payload,
+      }
+    case DELETE_SMURF_FAIL:
+      return {
+        ...state,
+        deletingSmurf: false,
         error: action.payload
       }
     default:

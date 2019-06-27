@@ -59,7 +59,7 @@ class UpdateSmurf extends Component {
             value={this.state.height}
             name="height"
           />
-          <button type="submit">{`Update ${this.props.smurfs[this.props.id].name}`}</button>
+          <button type="submit">{`Update ${this.props.name}`}</button>
         </form>
       </div>
     );
